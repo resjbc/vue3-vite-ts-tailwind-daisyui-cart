@@ -1,11 +1,4 @@
 <template>
-  <!-- <div class="flex h-screen">
-    <div class="m-auto">
-      <button class="btn">Hello DaisyUI</button>
-    </div>
-  </div> -->
-
-
   <div class="drawer">
     <input id="drawer-input" type="checkbox" class="drawer-toggle" />
     <div class="bg-base-100 text-base-content min-h-screen drawer-content">
@@ -32,8 +25,15 @@
 </template>
 
 <script setup lang="ts">
-import Footer from './components/Footer.vue'
-import Nav from './components/Nav.vue'
+import Footer from '@/components/Footer.vue'
+import Nav from '@/components/Nav.vue'
+
+import { useProductStore } from "@/store/products"
+
+const productStore = useProductStore()
+
+productStore.fetchAll()
+
 </script>
 
 <style scoped>

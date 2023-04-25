@@ -3,15 +3,15 @@
         <div class="lg:card-compact bordered">
             <figure class="px-10 pt-0">
                 <img
-                :src="productStore.find(x => x.id === pid )?.image"
+                :src="product.image"
                 alt="Card Image"
                 class="object-contain w-1/4 h-full mx-auto"
                 />
             </figure>
             <div class="card-body max-w-4xl mx-auto mt-8">
-                <h2 class="card-title text-2xl" v-text="productStore.find(x => x.id === pid )?.title"></h2>
-                <p v-text="productStore.find(x => x.id === pid )?.description"></p>
-                <p class="mt-4 text-2xl mb-4">{{ toCurrency(productStore.find(x => x.id === pid)?.price as number) }}</p>
+                <h2 class="card-title text-2xl" v-text="product.title"></h2>
+                <p v-text="product.description"></p>
+                <p class="mt-4 text-2xl mb-4">{{ toCurrency(product.price as number) }}</p>
                 <div class="card-actions">
                 <button class="btn btn-primary">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -28,11 +28,22 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 
-// Mockup
+
 import { toCurrency } from '../shared/utils'
-import  productStore from '../mockupdata/product.json'
+import type { Product } from '../types/product_type'
+// Mockup
+// import  productStore from '../mockupdata/product.json'
+import { useProductStore } from '../store/products'
+import { computed } from 'vue'
+
+const productStore = useProductStore()
 
 const route = useRoute()
-let pid = Number(route.params.productId)
+// let pid = Number(route.params.productId)
+
+const product = computed<Product> (
+    () => productStore.items[route.params.productId as string]
+
+)
 
 </script>
